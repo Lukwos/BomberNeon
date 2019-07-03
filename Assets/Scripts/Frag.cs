@@ -19,14 +19,17 @@ public class Frag : MonoBehaviour
 
         if (tag == "Player")
         {
+            // Kill Player
             //collision.gameObject.GetComponent<Player>();
         }
         else if (tag == "Bomb")
         {
+            // Detonate or Push Bomb
             collision.gameObject.GetComponent<Bomb>().Detonate();
         }
         else if (tag == "Brick")
         {
+            // Destroy Brick
             var tilemap = collision.gameObject.GetComponent<Tilemap>();
             tilemap.SetTile(tilemap.WorldToCell(collision.contacts[0].point), null);
         }

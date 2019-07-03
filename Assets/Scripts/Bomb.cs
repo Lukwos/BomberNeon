@@ -6,6 +6,9 @@ public class Bomb : MonoBehaviour
 {
     public GameObject fragPrefab;
     public float timer;
+    public int numberOfFrags;
+    public Gradient color;
+
     private float time;
 
     // Start is called before the first frame update
@@ -18,18 +21,20 @@ public class Bomb : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        if(time > timer)
+        if (time > timer)
         {
             Detonate();
         }
+        GetComponent<SpriteRenderer>().color = color.Evaluate(time / timer);
     }
 
     public void Detonate()
     {
-        Instantiate(fragPrefab, transform.position, Quaternion.Euler(0, 0, 0));
-        Instantiate(fragPrefab, transform.position, Quaternion.Euler(0, 0, 90));
-        Instantiate(fragPrefab, transform.position, Quaternion.Euler(0, 0, 180));
-        Instantiate(fragPrefab, transform.position, Quaternion.Euler(0, 0, 270));
+        for (int i = 0; i < numberOfFrags; i++)
+        {
+            float angle = 360.0f * i / numberOfFrags;
+            Instantiate(fragPrefab, transform.position, Quaternion.Euler(0, 0, angle));
+        }
         Destroy(gameObject);
     }
 }
